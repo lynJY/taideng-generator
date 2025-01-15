@@ -1,6 +1,6 @@
-package com.lyn.generator;
+package com.lyn.maker.generator.file;
 
-import com.lyn.model.MainTemplateConfig;
+import com.lyn.maker.model.DataModel;
 import freemarker.template.TemplateException;
 
 import java.io.File;
@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * 核心生成器
  */
-public class MainGenerator {
+public class FileGenerator {
 
     /**
      * 生成
@@ -27,19 +27,19 @@ public class MainGenerator {
         // 输入路径
         String inputPath = new File(projectPath, "taideng-generator-demo-projects" + File.separator+ "acm-template").getAbsolutePath();
         System.out.println(inputPath);
-        String outputPath = projectPath + File.separator+"taideng-generator-basic";
+        String outputPath = projectPath + File.separator+"taideng-generator-maker";
         System.out.println(outputPath);
         // 生成静态文件
-        StaticGenerator.copyFilesByRecursive(inputPath, outputPath);
+        StaticFileGenerator.copyFilesByHutool(inputPath, outputPath);
         // 生成动态文件
-        String inputDynamicFilePath = projectPath + File.separator + "taideng-generator-basic" +  File.separator+"src/main/resources/templates/MainTemplate.java.ftl";
+        String inputDynamicFilePath = projectPath + File.separator + "taideng-generator-maker" +  File.separator+"src/main/resources/templates/MainTemplate.java.ftl";
         String outputDynamicFilePath = outputPath + File.separator+"acm-template/src/com/yupi/acm/MainTemplate.java";
         System.out.println(outputDynamicFilePath);
-        DynamicGenerator.doGenerate(inputDynamicFilePath, outputDynamicFilePath, model);
+        DynamicFileGenerator.doGenerate(inputDynamicFilePath, outputDynamicFilePath, model);
     }
 
     public static void main(String[] args) throws TemplateException, IOException {
-        MainTemplateConfig mainTemplateConfig = new MainTemplateConfig();
+        DataModel mainTemplateConfig = new DataModel();
         mainTemplateConfig.setAuthor("lyn");
         mainTemplateConfig.setLoop(false);
         mainTemplateConfig.setOutputText("求和结果：");

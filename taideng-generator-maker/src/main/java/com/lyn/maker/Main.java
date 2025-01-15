@@ -1,13 +1,13 @@
-package com.lyn;
+package com.lyn.maker;
 
-import com.lyn.cli.CommandExecutor;
+//import com.lyn.maker.cli.CommandExecutor;
 public class Main {
     public static void main(String[] args) {
         //args = new String[]{"generate", "-l", "-a", "-o"};
         //args = new String[]{"config"};
         //args = new String[]{"list"};
-        CommandExecutor commandExecutor = new CommandExecutor();
-        commandExecutor.doExecute(args);
+//        CommandExecutor commandExecutor = new CommandExecutor();
+//        commandExecutor.doExecute(args);
 
     }
 }

@@ -2,7 +2,6 @@
 .idea
 taideng-generator.iml
 taideng-generator-basic.iml
-generated
 
 ### Maven template
 target/

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.lyn</groupId>
-    <artifactId>taideng-generator-basic</artifactId>
+    <artifactId>taideng-generator-maker</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
@@ -62,7 +62,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.lyn.Main</mainClass> <!-- 替换为你的主类的完整类名 -->
+                            <mainClass>com.lyn.maker.Main</mainClass> <!-- 替换为你的主类的完整类名 -->
                         </manifest>
                     </archive>
                 </configuration>
