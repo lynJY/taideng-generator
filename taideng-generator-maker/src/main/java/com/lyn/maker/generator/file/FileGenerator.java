@@ -33,7 +33,7 @@ public class FileGenerator {
         StaticFileGenerator.copyFilesByHutool(inputPath, outputPath);
         // 生成动态文件
         String inputDynamicFilePath = projectPath + File.separator + "taideng-generator-maker" +  File.separator+"src/main/resources/templates/MainTemplate.java.ftl";
-        String outputDynamicFilePath = outputPath + File.separator+"acm-template/src/com/yupi/acm/MainTemplate.java";
+        String outputDynamicFilePath = outputPath + File.separator+"acm-template/src/com/lyn/acm/MainTemplate.java";
         System.out.println(outputDynamicFilePath);
         DynamicFileGenerator.doGenerate(inputDynamicFilePath, outputDynamicFilePath, model);
     }

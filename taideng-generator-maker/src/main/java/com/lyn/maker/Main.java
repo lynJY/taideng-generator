@@ -1,13 +1,12 @@
 package com.lyn.maker;
 
-//import com.lyn.maker.cli.CommandExecutor;
-public class Main {
-    public static void main(String[] args) {
-        //args = new String[]{"generate", "-l", "-a", "-o"};
-        //args = new String[]{"config"};
-        //args = new String[]{"list"};
-//        CommandExecutor commandExecutor = new CommandExecutor();
-//        commandExecutor.doExecute(args);
+import com.lyn.maker.generator.main.GenerateTemplate;
+import freemarker.template.TemplateException;
 
+import java.io.IOException;
+public class Main extends GenerateTemplate{
+
+    public static void main(String[] args) throws TemplateException, IOException, InterruptedException {
+        new Main().doGenerate();
     }
 }
