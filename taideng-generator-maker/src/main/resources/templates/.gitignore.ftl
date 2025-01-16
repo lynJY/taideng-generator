@@ -1,7 +1,6 @@
 ### Custom template
 .idea
-taideng-generator.iml
-taideng-generator-basic.iml
+
 
 ### Maven template
 target/

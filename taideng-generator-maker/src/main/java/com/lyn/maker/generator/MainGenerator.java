@@ -10,6 +10,7 @@ import freemarker.template.TemplateException;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class MainGenerator {
     public static void main(String[] args) throws TemplateException, IOException, InterruptedException {
@@ -23,6 +24,12 @@ public class MainGenerator {
         if(!FileUtil.exist(outputPath)){
             FileUtil.mkdir(outputPath);
         }
+
+        //复制源模版
+        String sourceRootPath = meta.getFileConfig().getSourceRootPath();
+        String sourceCopyPath = outputPath + File.separator + ".source";
+        FileUtil.copy(sourceRootPath,sourceCopyPath,false);
+
         //读取resources目录
         ClassPathResource classPathResource = new ClassPathResource("");
         String inputResourcesPath = classPathResource.getAbsolutePath();
@@ -88,6 +95,7 @@ public class MainGenerator {
         outputFilePath = outputPath +File.separator+ "/pom.xml";
         DynamicFileGenerator.doGenerate(inputFilePath,outputFilePath,meta);
 
+        //打jar包
         JarGenerator.doGenerate(outputPath);
 
         // 封装脚本
@@ -95,6 +103,59 @@ public class MainGenerator {
         String jarName = String.format("%s-%s-jar-with-dependencies.jar", meta.getName(), meta.getVersion());
         String jarPath = "target/" + jarName;
         ScriptGenerator.doGenerate(shellOutputFilePath, jarPath);
+
+        //README.md
+        inputFilePath = inputResourcesPath + File.separator + "templates/README.md.ftl";
+        outputFilePath = outputPath +File.separator+ "/README.md";
+        DynamicFileGenerator.doGenerate(inputFilePath,outputFilePath,meta);
+
+        //生成精简版的代码程序（产物包）
+        String disOutputPath = outputPath + "-dist";
+        //拷贝JAR包
+        String targetAbsolutePath = disOutputPath + File.separator +"target";
+        FileUtil.mkdir(targetAbsolutePath);
+        String jarAbsolutePath = outputPath + File.separator + jarPath;
+        FileUtil.copy(jarAbsolutePath,targetAbsolutePath,true);
+        // 拷贝脚本文件
+        FileUtil.copy(shellOutputFilePath,disOutputPath,true);
+        FileUtil.copy(shellOutputFilePath + ".bat",disOutputPath,true);
+        //拷贝源模版文件
+        FileUtil.copy(sourceCopyPath,disOutputPath,true);
+
+        // 初始化git仓库
+        // 提示用户是否初始化Git仓库
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("是否要初始化Git仓库？(true/false)");
+        boolean initGitRepo = scanner.nextBoolean();
+        if (initGitRepo) {
+            Scanner scanner1 = new Scanner(System.in);
+            System.out.println("初始化完整版还是精简版？或者全部初始化？(1:完整版 2:精简版 3:ALL)");
+            int initChose = scanner1.nextInt();
+            scanner.close();
+            if(1 == initChose){
+                gitGenerator.doGenerate(outputPath);
+                inputFilePath = inputResourcesPath + File.separator + "templates/.gitignore.ftl";
+                outputFilePath = outputPath + File.separator + "/.gitignore";
+                DynamicFileGenerator.doGenerate(inputFilePath, outputFilePath, meta);
+            }else if(initChose == 2){
+                gitGenerator.doGenerate(outputPath + "-dist");
+                inputFilePath = inputResourcesPath + File.separator + "templates/.gitignore.ftl";
+                outputFilePath = outputPath + "-dist" + File.separator + "/.gitignore";
+                DynamicFileGenerator.doGenerate(inputFilePath, outputFilePath, meta);
+            }
+            else{
+                gitGenerator.doGenerate(outputPath);
+                inputFilePath = inputResourcesPath + File.separator + "templates/.gitignore.ftl";
+                outputFilePath = outputPath + File.separator + "/.gitignore";
+                DynamicFileGenerator.doGenerate(inputFilePath, outputFilePath, meta);
+                gitGenerator.doGenerate(outputPath + "-dist");
+                inputFilePath = inputResourcesPath + File.separator + "templates/.gitignore.ftl";
+                outputFilePath = outputPath + "-dist" + File.separator + "/.gitignore";
+                DynamicFileGenerator.doGenerate(inputFilePath, outputFilePath, meta);
+            }
+        }else{
+            System.out.println("未初始化Git仓库");
+        }
     }
 
 }

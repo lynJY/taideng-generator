@@ -6,8 +6,9 @@
   "author": "lyn",
   "createTime": "2025-1-15",
   "fileConfig": {
-    "inputRootPath": "E:/git/taideng-generator/taideng-generator-demo-projects/acm-template-pro",
+    "inputRootPath": ".source/acm-template-pro",
     "outputRootPath": "generated",
+    "sourceRootPath": "E:/git/taideng-generator/taideng-generator-demo-projects/acm-template-pro",
     "type": "dir",
     "files": [
       {
