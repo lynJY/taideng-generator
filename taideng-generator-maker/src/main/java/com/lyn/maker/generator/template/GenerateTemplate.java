@@ -1,4 +1,4 @@
-package com.lyn.maker.generator.main;
+package com.lyn.maker.generator.template;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.resource.ClassPathResource;

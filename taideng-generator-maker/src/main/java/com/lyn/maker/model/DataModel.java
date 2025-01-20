@@ -4,6 +4,8 @@ import lombok.Data;
 
 @Data
 public class DataModel {
+
+    private boolean needGit;
     /**
      * 是否生成循环
      */
